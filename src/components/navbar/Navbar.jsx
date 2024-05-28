@@ -1,19 +1,19 @@
-import logo from '../../images/logomarcawf.png'
-import './Navbar.css'
+import logo from "../../images/logomarcawf.png";
+import { Button, Nav, ImagemLogo, InputSpace } from "./NavbarStyled";
+    
+export function Navbar() {
+  return (
+    <>
+      <Nav>
+        <InputSpace>
+          <i className="bi bi-search"></i>
+          <input type="text" placeholder="pesquise por um título"/>
+        </InputSpace>
 
-export default function Navbar() {
-    return (
-        <>
-        <nav>
-            <div className="input-search-space">
-                <i className="bi bi-search"></i>
-                <input type="text" placeholder='pesquise por um título'/>
-            </div>  
+        <ImagemLogo src={logo} alt="logo break news"/>
 
-            <img src={logo} alt="logo break news"></img>
-        
-            <button>entrar</button>
-        </nav>
-        </>
-    )
+        <Button>entrar</Button>
+      </Nav>
+    </>
+  );
 }
