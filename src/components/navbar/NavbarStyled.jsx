@@ -44,13 +44,13 @@ export const InputSpace = styled.div`
         border-radius: 0.3rem;
 
         &:focus {
-            border: 1px solid #0bade3;
+            border: 1px solid #000000;
         }
     }
 ` 
 
 export const Button = styled.button`   
-    background-color: #0bade3;
+    background-color: #3A3A3A;
     border: none;
     outline: none;
     font-size: 1rem;
@@ -65,6 +65,6 @@ export const Button = styled.button`
     text-transform: uppercase;
 
     &:hover {
-        background-color: #0a86af;
+        background-color: #191919;
     }
 `
