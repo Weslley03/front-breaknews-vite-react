@@ -1,13 +1,27 @@
+import { CardBody, CardContainer, CardFooter  } from "./CardStyled";
+
 export function Card({news}) {
     return (
-        <section>
-            <h1>{news.title}</h1>
-            <p>{news.text}</p>
-            <img src={news.img} alt="imagem"/>
-            <i className="bi bi-heart"></i>
-            <span>{news.likes}</span>
-            <i className="bi bi-chat-dots"></i>
-            <span>{news.comments}</span>
-        </section>
+        <CardContainer>
+            <CardBody>
+                <div>
+                    <h2>{news.title}</h2>
+                    <p>{news.text}</p>
+                </div>
+                <img src={news.img} alt="imagem"/>
+            </CardBody>
+           
+           <CardFooter>
+                <div>
+                    <i className="bi bi-heart"></i>
+                    <span>{news.likes}</span>
+                </div>
+                
+                <div>
+                    <i className="bi bi-chat-dots"></i>
+                    <span>{news.comments}</span>
+                </div>
+           </CardFooter>
+        </CardContainer>
     )
 }

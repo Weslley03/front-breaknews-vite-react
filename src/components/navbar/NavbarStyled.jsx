@@ -21,7 +21,6 @@ export const InputSpace = styled.div`
     width: 200px;
     display: flex;
     align-items: center;
-    margin-left: 1rem; 
 
     i { //herança..dentro do InputSpace existe um i e um input
         position: absolute;
