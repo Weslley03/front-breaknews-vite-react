@@ -1,3 +1,4 @@
+import { TextLimit } from "../textLimit/textLimit";
 import { CardBody, CardContainer, CardFooter  } from "./CardStyled";
 
 export function Card(props) {
@@ -6,9 +7,9 @@ export function Card(props) {
             <CardBody>
                 <div>
                     <h2>{props.title}</h2>
-                    <p>{props.text}</p>
+                    <img src={props.banner} alt="imagem"/>
                 </div>
-                <img src={props.banner} alt="imagem"/>
+                <TextLimit text={props.text} limit={150}/>
             </CardBody>
            
            <CardFooter>

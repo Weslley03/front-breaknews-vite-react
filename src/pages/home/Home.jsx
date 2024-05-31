@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { Navbar } from "../../components/navbar/Navbar";
 import { Card } from '../../components/card/Card';
 import { HomeBody } from "./HomeStyled";
 import { getAllNews } from "../../services/postsService";
-import { useState } from "react";
 
 export default function Home() {
 
@@ -13,8 +13,9 @@ export default function Home() {
         setNews(response.data.results)
     }
 
-    findtAllNews()
-    console.log(news)
+    useEffect(() => {
+        findtAllNews()
+    }, [])
 
     return (
         <section>
