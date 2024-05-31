@@ -1,16 +1,16 @@
 import { Navbar } from "../../components/navbar/Navbar";
-import { Card } from '../../components/card/Card'
-import { news } from "../../Datas";
+import { Card } from '../../components/card/Card';
 import { HomeBody } from "./HomeStyled";
 import { getAllNews } from "../../services/postsService";
+import { useState } from "react";
 
 export default function Home() {
 
-    let news;
+    const [ news, setNews ] = useState([    ]) 
 
     async function findtAllNews() {
         const response = await getAllNews()
-        news = response.data.results
+        setNews(response.data.results)
     }
 
     findtAllNews()
@@ -20,8 +20,15 @@ export default function Home() {
         <section>
             <Navbar />
             <HomeBody>
-                {news.map((item, index) => {
-                    return <Card key ={index} news = {item} />
+                {news.map((item) => {
+                    return <Card 
+                    key ={item.id} 
+                    title = {item.title} 
+                    text = {item.text} 
+                    banner = {item.banner}
+                    likes = {item.likes.length}
+                    comments = {item.comments.length} 
+                    />
                 })} 
             </HomeBody>
         </section>
