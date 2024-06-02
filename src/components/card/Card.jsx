@@ -12,15 +12,15 @@ export function Card(props) {
           </CardHeader>
 
           <CardFooter>
-            <div>
+            <section>
               <i className="bi bi-heart"></i>
               <span>{props.likes?.length}</span>
-            </div>
+            </section>
 
-            <div>
+            <section>
               <i className="bi bi-chat-dots"></i>
               <span>{props.comments?.length}</span>
-            </div>
+            </section>
           </CardFooter>
         </div>
         <img src={props.banner} alt="imagem" />

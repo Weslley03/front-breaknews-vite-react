@@ -50,7 +50,7 @@ export const CardFooter = styled.article`
     align-items: center;
     gap: 1rem;
 
-    div {
+    section {
         display: flex;
         align-items: center;
         gap: 0.2    rem;
