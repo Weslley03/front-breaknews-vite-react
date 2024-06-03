@@ -23,6 +23,10 @@ export function Navbar() {
     reset();
   }
 
+  function goAuth(){
+    nami('/auth')
+  }
+
   return (
     <>
       <Nav>
@@ -39,7 +43,7 @@ export function Navbar() {
           <ImagemLogo src={logo} alt="logo break news"/>
         </Link>
 
-        <Button>entrar</Button>
+        <Button onClick={goAuth}>entrar</Button>
       </Nav>
       {errors.title && <ErrorSpan> {errors.title.message} </ErrorSpan>}
       <Outlet />

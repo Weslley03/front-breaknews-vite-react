@@ -6,6 +6,7 @@ import Search from './pages/pesquisa/Search.jsx'
 import Home from './pages/home/Home.jsx'
 import { GlobalStyled } from './GlobalStyled.jsx'
 import ErrorPage from './pages/NotFound/ErrorPage.jsx'
+import { Authentication } from './pages/authentication/Authentication.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         element: <Search />
       }
     ]
+  },
+  {
+    path: '/auth',
+    element: <Authentication />
   }
 ])
 
