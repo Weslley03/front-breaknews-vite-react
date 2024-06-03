@@ -15,6 +15,10 @@ export const ImagemLogo = styled.img`
     height: 3.5rem;
     object-fit: cover;
     cursor: pointer;
+    position: absolute;
+	left: 47%;
+    top: 1%;
+    
 `
 export const InputSpace = styled.div`
     position: relative;
@@ -38,8 +42,6 @@ export const InputSpace = styled.div`
         background-color: #acacac;
         }
     }
-
-    
 
     input {
         outline: none;
@@ -74,4 +76,14 @@ export const Button = styled.button`
     &:hover {
         background-color: #191919;
     }
+`
+
+export const ErrorSpan = styled.span`
+    background-color: #ffaeae;
+    color: #9e0000;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
 `
