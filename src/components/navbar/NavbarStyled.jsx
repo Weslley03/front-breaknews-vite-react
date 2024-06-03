@@ -22,7 +22,7 @@ export const InputSpace = styled.div`
     display: flex;
     align-items: center;
 
-    i { //herança..dentro do InputSpace existe um i e um input
+    button { //herança..dentro do InputSpace existe um i e um input
         position: absolute;
         top: 1;
         right: 0.2rem;
@@ -32,7 +32,14 @@ export const InputSpace = styled.div`
         color: #757575;
         border-radius: 0.3rem;
         padding: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+        background-color: #acacac;
+        }
     }
+
+    
 
     input {
         outline: none;
