@@ -22,8 +22,6 @@ export default function Home() {
 
   return (
     <section>
-      <Navbar />
-
       <HomeHeader>
         <Card
           top={true}

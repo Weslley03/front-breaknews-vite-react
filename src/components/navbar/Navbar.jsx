@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import logo from "../../images/logomarcawf.png";
 import { Button, Nav, ImagemLogo, InputSpace } from "./NavbarStyled";
     
@@ -14,6 +15,7 @@ export function Navbar() {
 
         <Button>entrar</Button>
       </Nav>
+      <Outlet />
     </>
   );
 }
