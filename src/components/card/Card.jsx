@@ -6,7 +6,7 @@ export function Card(props) {
     <CardContainer>
       <CardBody>
         <div>
-          <CardHeader top={props.top}>
+          <CardHeader $top={props.top}>
             <h2>{props.title}</h2>
             <TextLimit text={props.text} limit={150} />
           </CardHeader>
