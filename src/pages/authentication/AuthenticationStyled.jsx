@@ -21,11 +21,11 @@ export const Section = styled.section`
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    height: 400px   ;
+    height: 400px;
     padding: 2rem;
     gap: 1rem;
-    background-color: ${(props) => (props.type === 'signin' ? 'blue' : 'white')};
-    color: ${(props) => (props.type === 'signup' ? 'blue' : 'white')};
+    background-color: ${(props) => (props.type === 'signin' ? 'LightGray' : 'white')};
+    color: ${(props) => (props.type === 'signup' ? 'LightGray' : 'white')};
 
     h2 {
         font-size: 2rem;
