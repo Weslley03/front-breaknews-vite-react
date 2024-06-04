@@ -2,14 +2,10 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../images/logomarcawf.png";
 import { Nav, ImagemLogo, InputSpace } from "./NavbarStyled";
 import { useForm } from "react-hook-form";
-import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorSpan } from "./NavbarStyled";
 import { Button } from "../Button/Button";
-
-const searchSchema = z.object({
-  title: z.string().trim().min(1, {message: 'Por favor, preencha os dados'})
-});
+import { searchSchema } from '../../Schemas/SearchSchema.js'
     
 export function Navbar() {
 
