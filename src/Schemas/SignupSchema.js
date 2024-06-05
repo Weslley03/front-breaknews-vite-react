@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const SignupSchema = z.object({
-  nome: z
+  name: z
     .string()
     .min(2, { message: "o nome deve ter no mínimo 2 caracteres" })
-    .transform((nome) =>
-      nome //weslley felipe vilela => Weslley Felipe Vilela
+    .transform((name) =>
+      name //weslley felipe vilela => Weslley Felipe Vilela
         .trim()
         .split(" ")
         .map((palavra) => palavra[0].toUpperCase() + palavra.slice(1))

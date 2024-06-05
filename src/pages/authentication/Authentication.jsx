@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form";
 import { SigninSchema } from "../../Schemas/SigninSchema";
 import { SignupSchema } from "../../Schemas/SignupSchema";
 import { ErrorSpan } from  '../../components/navbar/NavbarStyled'
-
+import { signup, signin } from '../../services/userServices.js'
+import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 export function Authentication() {
 
@@ -18,12 +20,26 @@ export function Authentication() {
     resolver: zodResolver(SigninSchema) 
   })
 
-  function inHandleSubmit(data){
-    return console.log(data)
+  const nami = useNavigate()
+
+  async function inHandleSubmit(data){
+    try{
+      const response = await signin(data)
+      Cookies.set('token', response.data.token, { expires: 1 })
+      nami('/')
+    }catch(err){
+      console.log(err)
+    }
   }
 
-  function upHandleSubmit(data){
-    return console.log(data)
+  async function upHandleSubmit(data){
+    try{
+      const response = await signup(data);
+      Cookies.set('token', response.data.tokenUser, { expires: 1 });
+      nami('/');
+    }catch(err){
+      console.log(err)
+    }
   }
 
   return (  
@@ -45,7 +61,7 @@ export function Authentication() {
       <Section type="signup">
         <h2>cadastrar</h2>
         <form onSubmit={signupHandleSubmit(upHandleSubmit)}>
-          <Input type="nome" placeholder="Nome" name="nome" register={signupRegister}/>
+          <Input type="name" placeholder="Nome" name="name" register={signupRegister}/>
           {signupErros.nome && <ErrorSpan> {signupErros.nome.message} </ErrorSpan>}
 
           <Input type="email" placeholder="E-mail" name="email" register={signupRegister}/>
