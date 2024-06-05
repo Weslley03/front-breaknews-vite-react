@@ -36,7 +36,7 @@ export function Navbar() {
           <ImagemLogo src={logo} alt="logo break news"/>
         </Link>
 
-        <Link to={'/auth'}>
+        <Link to={'/welcome'}>
         <Button type="button" text='entrar'></Button>
         </Link>
         

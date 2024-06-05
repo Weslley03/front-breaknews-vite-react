@@ -3,7 +3,7 @@ import axios, { Axios } from "axios";
 const baseUrl = 'https://api-break-news.onrender.com'
 
 export function signin(data){
-    const response = axios.post(`${baseUrl}/auth`)
+    const response = axios.post(`${baseUrl}/auth`, data)
     return response;
 }
 
