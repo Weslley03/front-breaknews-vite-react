@@ -7,8 +7,9 @@ import { ErrorSpan } from "./NavbarStyled";
 import { Button } from "../Button/Button";
 import { searchSchema } from "../../Schemas/SearchSchema.js";
 import { userLogged } from "../../services/userServices.js";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { UserContext }  from "../../context/UserContext.jsx";
 
 export function Navbar() {
   const {
@@ -21,9 +22,7 @@ export function Navbar() {
   });
 
   const nami = useNavigate();
-  const [ user, setUser ] = useState({
-
-  }) 
+  const { user, setUser } = useContext(UserContext)
 
   function onSerach(data) {
     const { title } = data;
