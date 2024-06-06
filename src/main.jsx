@@ -7,6 +7,7 @@ import Home from './pages/home/Home.jsx'
 import { GlobalStyled } from './GlobalStyled.jsx'
 import ErrorPage from './pages/NotFound/ErrorPage.jsx'
 import { Authentication } from './pages/authentication/Authentication.jsx'
+import { Profile } from './pages/profile/Profile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
       {
         path: '/search/:title',
         element: <Search />
+      },
+
+      {
+        path: '/profile',
+        element: <Profile />
       }
     ]
   },

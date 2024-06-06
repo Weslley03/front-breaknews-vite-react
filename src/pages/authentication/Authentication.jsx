@@ -25,7 +25,6 @@ export function Authentication() {
   async function inHandleSubmit(data){
     try{
       const response = await signin(data)
-      console.log(response)
       Cookies.set('token', response.data.token, { expires: 1 })
       nami('/')
     }catch(err){

@@ -1,4 +1,5 @@
 import axios, { Axios } from "axios";
+import Cookies from "js-cookie";
 
 const baseUrl = 'https://api-break-news.onrender.com'
 
@@ -17,6 +18,15 @@ export function signup(data){
     }
     
     const response = axios.post(`${baseUrl}/users/create`, body)
+    return response;
+}
+
+export function userLogged(){
+    const response = axios.get(`${baseUrl}/users/findById`, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+        }
+    })
     return response;
 }
 
