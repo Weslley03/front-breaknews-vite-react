@@ -73,7 +73,7 @@ export function Navbar() {
 
         { (user) ? (
           <UserLoggedSpace>
-            <Link to={'/profile'}>
+            <Link to={'/profile'} style={{textDecoration: 'none'}}>
               <h2>{user.userName}</h2>
             </Link>
             <i className="bi bi-box-arrow-right" onClick={signout}></i>

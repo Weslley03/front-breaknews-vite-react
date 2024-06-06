@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const baseUrl = 'https://api-break-news.onrender.com'
 
@@ -14,5 +15,23 @@ export function getTopPost() {
 
 export function findByTitle(title) {
     const response = axios.get(`${baseUrl}/news/search?title=${title}`); 
+    return response;
+}
+
+export function findByUser(){
+    const response = axios.get(`${baseUrl}/news/byUser`, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+        }
+    })
+    return response;
+}
+
+export function createNews(data){
+    const response = axios.post(`${baseUrl}/news/create`, data, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+        }
+    }) 
     return response;
 }

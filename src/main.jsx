@@ -9,6 +9,7 @@ import ErrorPage from './pages/NotFound/ErrorPage.jsx'
 import { Authentication } from './pages/authentication/Authentication.jsx'
 import { Profile } from './pages/profile/Profile.jsx'
 import UserProvider from './context/UserContext.jsx'
+import ManageNews from './pages/manageNews/ManageNews.jsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
   {
     path: '/welcome',
     element: <Authentication />
+  },
+
+  {
+    path: '/manage-news/:action',
+    element: <ManageNews />
   }
 ])
 

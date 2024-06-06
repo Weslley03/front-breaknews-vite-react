@@ -13,8 +13,8 @@ export function signup(data){
     const body = {
         ...data, 
         userName: generateUsername(data.name), 
-        avatar: 'https://imgur.com/xmI2QAo',
-        background: 'https://imgur.com/gallery/then-they-started-shouting-wrtqcMM'
+        avatar: 'https://i.imgur.com/xmI2QAo.jpeg',
+        background: 'https://i.imgur.com/XbRg9D7.png'
     }
     
     const response = axios.post(`${baseUrl}/users/create`, body)
