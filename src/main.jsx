@@ -39,7 +39,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/manage-news/:action',
+    path: '/manage-news/:action/:id',
     element: <ManageNews />
   }
 ])

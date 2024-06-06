@@ -31,9 +31,9 @@ export function Profile() {
   return (
     <ProfileContainer>
       <ProfileHeader>
-        <ProfileIconEdit>
-          <i className="bi bi-pencil-square"></i>
-        </ProfileIconEdit>
+          <ProfileIconEdit>
+            <i className="bi bi-pencil-square"></i>
+          </ProfileIconEdit>
 
         <ProfileBackground src={user.background} alt="background do user" />
 
@@ -44,7 +44,7 @@ export function Profile() {
           </ProfileUser>
 
           <ProfileActions>
-              <Link to={"/manage-news/add"}>
+              <Link to={"/manage-news/add/news"}>
                 <ProfileIconAdd>
                   <i className="bi bi-plus-circle"></i>
                 </ProfileIconAdd>
@@ -60,11 +60,13 @@ export function Profile() {
               return(
                 <Card
                   key={element.id}
+                  id={element.id}
                   title={element.title}
                   text={element.text}
                   banner={element.banner}
                   likes={element.likes}
                   comments={element.comments}  
+                  actions={true}
                 />
               )
             })}

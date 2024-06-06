@@ -4,17 +4,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NewsSchema } from '../../Schemas/NewsSchema.js'
 import { ErrorSpan } from "../../components/navbar/NavbarStyled.jsx";
-import { createNews } from "../../services/postsService.js";
+import { createNews, getNewsByIdService, editNewsSubmit } from "../../services/postsService.js";
 import { Input } from "../../components/InputCompo/Input.jsx";
 import { Button } from "../../components/Button/Button.jsx";
+import { useEffect } from "react";
 
 export default function ManageNews(){
     
     const nami = useNavigate()
-    const { action } = useParams();
+    const { action, id } = useParams();
     const {
         register: registerNews,
         handleSubmit: handleRegisterNews,
+        setValue,
         formState: { errors: errorsRegisterNews }
     } = useForm({resolver: zodResolver(NewsSchema)})
     
@@ -27,14 +29,31 @@ export default function ManageNews(){
         }
     }
 
-    async function editrNewsSubmit(data){
-       /* try{
-            await editNews(data)
+    async function editNewsSubmit(data){
+        try{
+            await editNews(data, id)
             nami('/profile')
         }catch(err){
             console.log(err)
-        } */
+        } 
     }
+
+    async function getNewsById(id){
+        try{
+            const { data } = await getNewsByIdService(id);
+            setValue('title', data.noticia.title)
+            setValue('banner', data.noticia.banner)
+            setValue('text', data.noticia.text)
+        }catch(err){
+            console.log(err)
+        }
+    } 
+
+    useEffect(() => {
+        if(action === 'edit') {
+            getNewsById(id)
+        }
+    }, [])
 
     return(
         <AddNewsContainer>
@@ -42,7 +61,7 @@ export default function ManageNews(){
             <form onSubmit={
                 action == 'add'
                  ? handleRegisterNews(registerNewsSubmit)
-                 : handleRegisterNews(editrNewsSubmit)
+                 : handleRegisterNews(editNewsSubmit)
             }>
             
             <Input  
@@ -50,7 +69,6 @@ export default function ManageNews(){
                 placeholder='titulo'
                 name='title'
                 register={registerNews}
-                value={action !== 'add' ? 'titulo' : ''}
             />
             {errorsRegisterNews.title && (<ErrorSpan> {errorsRegisterNews.title.message} </ErrorSpan>)}
 
@@ -59,7 +77,6 @@ export default function ManageNews(){
                 placeholder='link da imagem'
                 name='banner'
                 register={registerNews}
-                value={action !== 'add' ? 'banner link' : ''}
             />
             {errorsRegisterNews.banner && (<ErrorSpan> {errorsRegisterNews.banner.message} </ErrorSpan>)}
 
@@ -69,7 +86,6 @@ export default function ManageNews(){
                 name='text'
                 register={registerNews}
                 isInput={false}
-                value={action !== 'add' ? 'text' : ''}
             />
             {errorsRegisterNews.text && (<ErrorSpan> {errorsRegisterNews.text.message} </ErrorSpan>)}
 
