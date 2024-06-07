@@ -45,8 +45,17 @@ export function getNewsByIdService(id){
     return response;
 }
 
-export function editNewsSubmit(data, id){
+export function editNews(data, id){
     const response = axios.patch(`${baseUrl}/news/upadate/${id}`, data, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+        }
+    })
+    return response;
+}
+
+export function deleteNews(id){
+    const response = axios.delete(`${baseUrl}/news/${id}`, {
         headers: {
             Authorization: `Bearer ${Cookies.get('token')}`
         }

@@ -9,9 +9,15 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
         <div>
           <CardHeader $top={top}>
             {actions && 
+            <span>
             <Link to={`/manage-news/edit/${id}`}> 
               <i className="bi bi-pencil-square"></i>
             </Link>
+
+            <Link to={`/manage-news/delete/${id}`}> 
+              <i className="bi bi-trash3"></i>
+            </Link>
+            </span>
             }
             <h2>{title}</h2>
             <TextLimit text={text} limit={150} />

@@ -23,13 +23,19 @@ export const CardHeader = styled.article`
     }   
 
     i{
-        display: flex;
-        justify-content: flex-end;
         cursor: pointer;
         color: #191919;
         font-size: 1.1rem;
         text-decoration: none;
         border: none;
+    }
+
+    span{
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        flex-direction: row;
+        text-decoration: none   ;
     }
 `
 
