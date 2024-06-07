@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Card } from "../../components/card/Card";
 import { HomeBody, HomeHeader } from "./HomeStyled";
 import { getAllNews, getTopPost } from "../../services/postsService";
-import Cookies from "js-cookie";
 
 export default function Home() {
   const [news, setNews] = useState([]);
   const [topNews, setTopNews] = useState([]);
+  const [ loading, setLoading ] = useState(true)  
 
   async function findtNews() {
     const newsResponse = await getAllNews();
@@ -17,8 +17,26 @@ export default function Home() {
   }
 
   useEffect(() => {
-    findtNews();
+    const buscarNoticias = async () => {
+      try{
+        setLoading(true);
+        await findtNews()
+      }catch(err){
+        console.log(err)
+      }finally{
+        setLoading(false)
+      }
+    }
+    buscarNoticias();
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <p>carregando...</p>
+      </div>
+    );
+  }
 
   return (
     <section>

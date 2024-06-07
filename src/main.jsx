@@ -10,6 +10,7 @@ import { Authentication } from './pages/authentication/Authentication.jsx'
 import { Profile } from './pages/profile/Profile.jsx'
 import UserProvider from './context/UserContext.jsx'
 import ManageNews from './pages/manageNews/ManageNews.jsx'
+import PageWithfooter from './components/footer/PageWithfooter.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,12 +20,20 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home /> 
+        element: (
+          <PageWithfooter>
+             <Home />
+          </PageWithfooter>
+        )
       },
 
       {
         path: '/search/:title',
-        element: <Search />
+        element: (
+          <PageWithfooter>
+            <Search />
+          </PageWithfooter>
+      )
       },
 
       {

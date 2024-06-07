@@ -22,7 +22,7 @@ export function Navbar() {
   });
 
   const nami = useNavigate();
-  const { user, setUser } = useContext(UserContext)
+  let { user, setUser } = useContext(UserContext)
 
   function onSerach(data) {
     const { title } = data;
@@ -46,8 +46,14 @@ export function Navbar() {
   }
 
   useEffect(() => {
-    if (Cookies.get("token")) {
-      findUserLogged();
+    try{
+      if (Cookies.get("token")) {
+        findUserLogged();
+      } else{
+        setUser(undefined);
+      }
+    }catch(err){
+      console.log(err)
     }
   },[]);
 

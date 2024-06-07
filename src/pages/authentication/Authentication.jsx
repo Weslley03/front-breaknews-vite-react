@@ -9,6 +9,7 @@ import { ErrorSpan } from  '../../components/navbar/NavbarStyled'
 import { signup, signin } from '../../services/userServices.js'
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie'
+import { useState } from "react";
 
 export function Authentication() {
 
@@ -27,8 +28,8 @@ export function Authentication() {
       const response = await signin(data)
       Cookies.set('token', response.data.token, { expires: 1 })
       nami('/')
-    }catch(err){
-      console.log(err)
+    }catch(errorSignIn){
+      setErrorSignIn('erro na autenticação, verifique os dados escritos')
     }
   }
 
@@ -37,10 +38,13 @@ export function Authentication() {
       const response = await signup(data);
       Cookies.set('token', response.data.tokenUser, { expires: 1 });
       nami('/');
-    }catch(err){
-      console.log(err)
+    }catch(errorSignUp){
+      setErrorSignUp('este usuario já existe');
     }
   }
+
+  const [errorSignIn, setErrorSignIn] = useState('');
+  const [errorSignUp, setErrorSignUp] = useState('');
 
   return (  
     <AuthContainer>
@@ -54,7 +58,9 @@ export function Authentication() {
           <Input type="password" placeholder="Password" name="password" register={signinRegister}/>
           {signinErrors.password && <ErrorSpan> {signinErrors.password.message} </ErrorSpan>}
 
-          <Button type="submit" text="entrar"></Button>
+          {errorSignIn && <ErrorSpan>{errorSignIn}</ErrorSpan>}
+
+          <Button name='buttonLogin' type="submit" text="entrar"></Button>
         
         </form>
       </Section>
@@ -73,6 +79,8 @@ export function Authentication() {
           <Input type="password" placeholder="Password Confirm" name="confirmpassword" register={signupRegister}/>
           {signupErros.confirmpassword && <ErrorSpan> {signupErros.confirmpassword.message} </ErrorSpan>}
           
+          {errorSignUp && <ErrorSpan>{errorSignUp}</ErrorSpan>}
+
           <Button type="submit" text="cadastrar"></Button>
         </form>
       </Section>
