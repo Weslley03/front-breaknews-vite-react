@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../context/UserContext"
 import { EditProfileContainer } from "./ManageProfileStyled";
 import { Input } from "../../components/InputCompo/Input";
@@ -10,11 +10,11 @@ import { ProfileSchema } from '../../Schemas/ProfileSchema.js'
 import { ProfileHeader, ProfileUser, ProfileAvatar, ProfileBackground } from "../profile/ProfileStyled.jsx";
 import { findUserByIdService, editProfile } from "../../services/userServices.js";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 export default function ManageProfile() {
 
     const nami = useNavigate()
+    const [ loading, setLoading ] = useState(true)  
     const { user } = useContext(UserContext);
     const id = user._id
     const {
@@ -25,11 +25,12 @@ export default function ManageProfile() {
 
     async function EditProfileSubmit(data){
         try{
+        setLoading(true)    
         await editProfile(id, data)
         }catch(err){
             console.log(err)
-        } finally{
-            nami('/profile')
+        }finally{
+            setLoading(false)
         }
     }
 
