@@ -33,9 +33,8 @@ export const ProfileIconEdit = styled.i`
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 
-    &:hover {
-        color: #fff;
-        background-color: #3A3A3A;
+    i{
+        color: #3A3A3A;
     }
 `
 

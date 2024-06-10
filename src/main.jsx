@@ -11,6 +11,7 @@ import { Profile } from './pages/profile/Profile.jsx'
 import UserProvider from './context/UserContext.jsx'
 import ManageNews from './pages/manageNews/ManageNews.jsx'
 import PageWithfooter from './components/footer/PageWithfooter.jsx'
+import ManageProfile from './pages/manageProfile/ManageProfile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
   {
     path: '/manage-news/:action/:id',
     element: <ManageNews />
+  },
+
+  { 
+    path: 'manage-profile/:id',
+    element: <ManageProfile />
   }
 ])
 

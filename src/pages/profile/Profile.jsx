@@ -31,10 +31,13 @@ export function Profile() {
   return (
     <ProfileContainer>
       <ProfileHeader>
-          <ProfileIconEdit>
-            <i className="bi bi-pencil-square"></i>
-          </ProfileIconEdit>
-
+      
+              <ProfileIconEdit>       
+                <Link to={`/manage-profile/user`}> 
+                  <i className="bi bi-pencil-square"></i> 
+                </Link>
+              </ProfileIconEdit>
+        
         <ProfileBackground src={user.background} alt="background do user" />
 
         <ProfileUser>
