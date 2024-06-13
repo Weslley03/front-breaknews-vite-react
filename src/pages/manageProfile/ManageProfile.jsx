@@ -31,6 +31,7 @@ export default function ManageProfile() {
             console.log(err)
         }finally{
             setLoading(false)
+            nami('/profile')
         }
     }
 

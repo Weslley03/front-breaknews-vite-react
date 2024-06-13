@@ -6,7 +6,7 @@ export default function Footer (){
         <>
             <FooterContainer>
                 <a href="https://www.instagram.com/oweslley03/" target="_blank" >
-                    <p>Weslley é zica</p>
+                    <p>developed by weslley</p>
                 </a>        
             </FooterContainer>
         </>
