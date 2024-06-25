@@ -23,13 +23,19 @@ export function Authentication() {
 
   const nami = useNavigate()
 
+  const [errorLogin, setErrorLogin] = useState('');
+
   async function inHandleSubmit(data){
     try{
       const response = await signin(data)
-      Cookies.set('token', response.data.token, { expires: 1 })
-      nami('/')
-    }catch(errorSignIn){
-      setErrorSignIn('erro na autenticação, verifique os dados escritos')
+      if(response.status === 400){
+        setErrorLogin(response.data.message)
+      } else{
+        Cookies.set('token', response.data.token, { expires: 1 })
+        nami('/')
+      }
+    }catch(err){
+      setErrorLogin(err.message)
     }
   }
 
@@ -43,7 +49,6 @@ export function Authentication() {
     }
   }
 
-  const [errorSignIn, setErrorSignIn] = useState('');
   const [errorSignUp, setErrorSignUp] = useState('');
 
   return (  
@@ -58,7 +63,7 @@ export function Authentication() {
           <Input type="password" placeholder="Password" name="password" register={signinRegister}/>
           {signinErrors.password && <ErrorSpan> {signinErrors.password.message} </ErrorSpan>}
 
-          {errorSignIn && <ErrorSpan>{errorSignIn}</ErrorSpan>}
+          {errorLogin && <ErrorSpan>{errorLogin}</ErrorSpan>}
 
           <Button name='buttonLogin' type="submit" text="entrar"></Button>
         

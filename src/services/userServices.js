@@ -3,9 +3,19 @@ import Cookies from "js-cookie";
 
 const baseUrl = 'https://api-break-news.onrender.com'
 
-export function signin(data){
-    const response = axios.post(`${baseUrl}/auth`, data)
-    return response;
+export async function signin(data){
+    try{
+        const response = await axios.post(`${baseUrl}/auth`, data)
+        return response;
+    }catch(err){
+        if(err.response){
+            throw new Error(err.response.data.message || 'houve um erro desconhecido')
+        } else if(err.request) {
+            throw new Error('sem resposta do servidor')
+        }else {
+            throw new Error('houve um erro na req', err.message)
+        }
+    }
 }
 
 export function signup(data){
