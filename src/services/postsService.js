@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 const baseUrl = 'https://api-break-news.onrender.com'
 
 export async function getAllNews() {
-    const response = axios.get(`${baseUrl}/news/getall`);
+    const response = await fetch(`${baseUrl}/news/getall`);
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let result = ''
