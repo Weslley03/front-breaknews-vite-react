@@ -10,7 +10,7 @@ export default function Home() {
 
   async function findtNews() {
     const newsResponse = await getAllNews();
-    setNews(newsResponse.data.results);
+    setNews(newsResponse);
 
     const topNewsResponse = await getTopPost();
     setTopNews(topNewsResponse.data.news);
@@ -18,14 +18,8 @@ export default function Home() {
 
   useEffect(() => {
     const buscarNoticias = async () => {
-      try{
         setLoading(true);
         await findtNews()
-      }catch(err){
-        console.log(err)
-      }finally{
-        setLoading(false)
-      }
     }
     buscarNoticias();
   }, []);

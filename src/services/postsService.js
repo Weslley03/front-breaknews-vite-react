@@ -3,9 +3,19 @@ import Cookies from 'js-cookie'
 
 const baseUrl = 'https://api-break-news.onrender.com'
 
-export function getAllNews() {
+export async function getAllNews() {
     const response = axios.get(`${baseUrl}/news/getall`);
-    return response;       
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let result = ''
+    
+    while(true){
+        const { done, value } = await reader.read();
+        if(done) break;
+        result += decoder.decode(value, {stream: true});
+    }
+    const items = result.trim().split('\n').map(line => JSON.parse(line));
+    return items;
 }   
 
 export function getTopPost() {
