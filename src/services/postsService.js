@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const baseUrl = 'https://api-break-news.onrender.com'
+//const baseUrl = 'https://api-break-news.onrender.com'
+const baseUrl = 'http://localhost:3000'
 
 export function getAllNews() {
     const response = axios.get(`${baseUrl}/news/getall`);
