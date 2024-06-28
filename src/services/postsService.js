@@ -18,8 +18,8 @@ export async function getAllNews() {
     return items;
 }   
 
-export function getTopPost() {
-    const response = axios.get(`${baseUrl}/news/top`);
+export async function getTopPost() {
+    const response = await axios.get(`${baseUrl}/news/top`);
     return response;
 }
 

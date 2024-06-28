@@ -14,7 +14,6 @@ export default function Home() {
 
     const topNewsResponse = await getTopPost();
     setTopNews(topNewsResponse.data.news);
-    console.log(topNewsResponse.data.news)
 
     setLoading(false)
   }
