@@ -4,13 +4,13 @@ import Cookies from 'js-cookie'
 //const baseUrl = 'https://api-break-news.onrender.com'
 const baseUrl = 'http://localhost:3000'
 
-export function getAllNews() {
-    const response = axios.get(`${baseUrl}/news/getall`);
+export async function getAllNews() {
+    const response = await axios.get(`${baseUrl}/news/getall`);
     return response;       
 }   
 
-export function getTopPost() {
-    const response = axios.get(`${baseUrl}/news/top`);
+export async function getTopPost() {
+    const response = await axios.get(`${baseUrl}/news/top`);
     return response;
 }
 
