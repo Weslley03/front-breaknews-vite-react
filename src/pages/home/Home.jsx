@@ -14,11 +14,13 @@ export default function Home() {
       const newsResponse = await getAllNews();
       if(newsResponse.data && newsResponse.data.results){
         setNews(newsResponse.data.results);
+        setLoading(false)
       }
 
       const topNewsResponse = await getTopPost();
       if(topNewsResponse.data && topNewsResponse.data.news){
         setTopNews(topNewsResponse.data.news);
+        setLoading(false)
       }
     }catch(err){
       console.log(err)
