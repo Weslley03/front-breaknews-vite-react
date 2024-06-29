@@ -9,13 +9,22 @@ export default function Home() {
   const [ loading, setLoading ] = useState(true)  
 
   async function findtNews() {
-    const newsResponse = await getAllNews();
-    setNews(newsResponse);
 
-    const topNewsResponse = await getTopPost();
-    setTopNews(topNewsResponse.data.news);
+    try{
+      const newsResponse = await getAllNews();
+      if(newsResponse.data && newsResponse.data.results){
+        setNews(newsResponse.data.results);
+      }
 
-    setLoading(false)
+      const topNewsResponse = await getTopPost();
+      if(topNewsResponse.data && topNewsResponse.data.news){
+        setTopNews(topNewsResponse.data.news);
+      }
+    }catch(err){
+      console.log(err)
+      setNews([])
+      setTopNews([])
+    }
   }
 
   useEffect(() => {
@@ -36,18 +45,20 @@ export default function Home() {
   return (
     <section>
       <HomeHeader>
-        <Card
+        {topNews && (
+          <Card
           top={true}
           title={topNews.title}
           text={topNews.text}
           banner={topNews.banner}
           likes={topNews.likes}
           comments={topNews.comments}
-        />
+          />
+        )}
       </HomeHeader>
 
       <HomeBody>
-        {news.map((item) => {
+        {Array.isArray(news) && news.map((item) => {
           return (
             <Card
               key={item.id}
