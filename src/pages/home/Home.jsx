@@ -29,15 +29,8 @@ export default function Home() {
 
   useEffect(() => {
     const buscarNoticias = async () => {
-      try{
-        setLoading(true);
         await findtNews()
-      }catch(err){
-        console.log(err)
-      }finally{
-        setLoading(false)
-      }
-    }
+    }    
     buscarNoticias();
   }, []);
 
