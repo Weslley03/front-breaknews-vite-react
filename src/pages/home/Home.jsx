@@ -54,6 +54,7 @@ export default function Home() {
           text={topNews.text}
           banner={topNews.banner}
           likes={topNews.likes}
+          id={topNews.id}
           comments={topNews.comments}
           />
         )}
@@ -68,6 +69,7 @@ export default function Home() {
               text={item.text}
               banner={item.banner}
               likes={item.likes}
+              id={item.id}
               comments={item.comments}
             />
           );

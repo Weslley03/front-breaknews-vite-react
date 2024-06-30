@@ -1,8 +1,44 @@
 import { TextLimit } from "../textLimit/textLimit";
 import { CardBody, CardContainer, CardHeader, CardFooter } from "./CardStyled";
 import { Link } from "react-router-dom";
+import { likedNews, likecheck } from '../../services/postsService.js'
+import { useEffect, useState } from "react";
 
 export function Card({top, title, text, likes, comments, banner, actions= false, id }) {
+
+  const [ localLikes, setLocalLikes ] = useState(likes?.length || 0)
+  const [ isLiked, setIsLiked ] = useState(false)
+
+  useEffect( () => {
+    setLocalLikes(likes?.length || 0)
+  }, [id])
+
+  async function handleLike(){
+      try{ 
+        if(isLiked){
+          const disLike = await likedNews(id)
+          if(disLike){
+            const response = await likecheck(id) 
+            setLocalLikes(response.data.liked.length)
+            setIsLiked(false)
+          } else{
+            console.log('não foi possível descurtir a publicação');
+          }
+        } else {
+          const liked = await likedNews(id)
+          if(liked){
+            const response = await likecheck(id) 
+            setLocalLikes(response.data.liked.length)
+            setIsLiked(true)
+          }else{
+            console.log('não foi possivel curtir a publicação')
+          }
+        } 
+      }catch(err){
+        console.log('caiu no erro card component, função handleLike, ', err)
+      }
+  }
+
   return (
     <CardContainer>
       <CardBody>
@@ -25,8 +61,8 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
 
           <CardFooter>
             <section>
-              <i className="bi bi-heart"></i>
-              <span>{likes?.length}</span>
+              <i className="bi bi-heart" onClick={handleLike}></i>
+              <span>{localLikes}</span>
             </section>
 
             <section>
