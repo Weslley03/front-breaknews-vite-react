@@ -77,15 +77,15 @@ export async function likedNews(idNew){
     }
 }
 
-export async function isLikedService(idNew){
+export async function likecheck(idNew){
     try{
-        const response = await axios.get(`${baseUrl}/news/isliked/${idNew}`, {
+        const response = await axios.get(`${baseUrl}/news/likecheck/${idNew}`, {
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
-        return response.data.isLiked;
+        return response;
     }catch(err){
-        console.log('erro no service do FRONT, ', err)
+        res.status(500).send(err.message);
     }
 }

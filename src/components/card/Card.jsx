@@ -1,24 +1,25 @@
 import { TextLimit } from "../textLimit/textLimit";
 import { CardBody, CardContainer, CardHeader, CardFooter } from "./CardStyled";
 import { Link } from "react-router-dom";
-import { likedNews, isLikedService } from '../../services/postsService.js'
+import { likedNews, likecheck } from '../../services/postsService.js'
 import { useEffect, useState } from "react";
 
 export function Card({top, title, text, likes, comments, banner, actions= false, id }) {
-  
+
   const [ localLikes, setLocalLikes ] = useState(likes?.length || 0)
   const [ isLiked, setIsLiked ] = useState(false)
 
-  useEffect(() => {
-
-  }, [])
+  useEffect( () => {
+    setLocalLikes(likes?.length || 0)
+  }, [id])
 
   async function handleLike(){
-      try{      
+      try{ 
         if(isLiked){
           const disLike = await likedNews(id)
           if(disLike){
-            setLocalLikes(prevLikes => prevLikes -1)
+            const response = await likecheck(id) 
+            setLocalLikes(response.data.liked.length)
             setIsLiked(false)
           } else{
             console.log('não foi possível descurtir a publicação');
@@ -26,12 +27,13 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
         } else {
           const liked = await likedNews(id)
           if(liked){
-            setLocalLikes(prevLikes => prevLikes  +1)
+            const response = await likecheck(id) 
+            setLocalLikes(response.data.liked.length)
             setIsLiked(true)
           }else{
             console.log('não foi possivel curtir a publicação')
           }
-        }
+        } 
       }catch(err){
         console.log('caiu no erro card component, função handleLike, ', err)
       }
