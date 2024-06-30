@@ -69,5 +69,6 @@ export const CardFooter = styled.article`
         display: flex;
         align-items: center;
         gap: 0.2    rem;
+        cursor: pointer;
     }
 `

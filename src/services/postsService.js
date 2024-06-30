@@ -63,3 +63,29 @@ export function deleteNews(id){
     })
     return response;
 }
+
+export async function likedNews(idNew){
+    try{
+        const response = await axios.patch(`${baseUrl}/news/like/${idNew}`, {}, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        });
+        return response;
+    }catch(err){    
+        console.log('erro no service do FRONT, ', err)
+    }
+}
+
+export async function isLikedService(idNew){
+    try{
+        const response = await axios.get(`${baseUrl}/news/isliked/${idNew}`, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        })
+        return response.data.isLiked;
+    }catch(err){
+        console.log('erro no service do FRONT, ', err)
+    }
+}

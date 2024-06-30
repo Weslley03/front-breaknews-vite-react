@@ -14,11 +14,13 @@ export default function Home() {
       const newsResponse = await getAllNews();
       if(newsResponse.data && newsResponse.data.results){
         setNews(newsResponse.data.results);
+        setLoading(false)
       }
 
       const topNewsResponse = await getTopPost();
       if(topNewsResponse.data && topNewsResponse.data.news){
         setTopNews(topNewsResponse.data.news);
+        setLoading(false)
       }
     }catch(err){
       console.log(err)
@@ -52,6 +54,7 @@ export default function Home() {
           text={topNews.text}
           banner={topNews.banner}
           likes={topNews.likes}
+          id={topNews.id}
           comments={topNews.comments}
           />
         )}
@@ -66,6 +69,7 @@ export default function Home() {
               text={item.text}
               banner={item.banner}
               likes={item.likes}
+              id={item.id}
               comments={item.comments}
             />
           );
