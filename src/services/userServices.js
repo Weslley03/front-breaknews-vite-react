@@ -1,8 +1,8 @@
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
 
-//const baseUrl = 'https://api-break-news.onrender.com'
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://api-break-news.onrender.com'
+//const baseUrl = 'http://localhost:3000'
 
 export async function signin(data){
     try{
