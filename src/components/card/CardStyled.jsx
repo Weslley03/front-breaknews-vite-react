@@ -58,6 +58,15 @@ export const CardBody = styled.article`
         object-position: center;
         border-radius: 0 .3rem .3rem 0;
     }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+
+        img {
+            width: 100%;
+            border-radius: 0 0 .3rem .3rem;
+        }
+    }
 `;
 
 export const CardFooter = styled.article`
