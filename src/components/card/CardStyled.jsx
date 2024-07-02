@@ -48,7 +48,7 @@ export const CardBody = styled.article`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 1rem;
+        padding: 0.5rem;
         width: 100%;
     }
 
@@ -65,6 +65,11 @@ export const CardBody = styled.article`
         img {
             width: 100%;
             border-radius: 0 0 .3rem .3rem;
+            
+        }
+
+        div{
+            padding: 0.2rem;
         }
     }
 `;
