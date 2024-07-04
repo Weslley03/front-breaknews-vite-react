@@ -12,6 +12,8 @@ import UserProvider from './context/UserContext.jsx'
 import ManageNews from './pages/manageNews/ManageNews.jsx'
 import PageWithfooter from './components/footer/PageWithfooter.jsx'
 import ManageProfile from './pages/manageProfile/ManageProfile.jsx'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <GlobalStyled />
     <UserProvider>
       <RouterProvider router={router} />
+      <ToastContainer autoClose={1000} position="top-center"/>
     </UserProvider>
   </React.StrictMode>,
 )

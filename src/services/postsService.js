@@ -70,10 +70,14 @@ export async function likedNews(idNew){
             headers: {
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
-        });
-        return response;
-    }catch(err){    
-        console.log('erro no service do FRONT, ', err)
+        })
+        
+        return response
+    }catch(err){
+        if(err.response && err.response.status === 401){
+            return
+        }
+        return console.log('caiu no service do front, ', err)
     }
 }
 

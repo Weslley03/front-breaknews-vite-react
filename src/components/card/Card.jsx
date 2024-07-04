@@ -3,6 +3,7 @@ import { CardBody, CardContainer, CardHeader, CardFooter } from "./CardStyled";
 import { Link } from "react-router-dom";
 import { likedNews, likecheck } from '../../services/postsService.js'
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export function Card({top, title, text, likes, comments, banner, actions= false, id }) {
 
@@ -31,7 +32,7 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
             setLocalLikes(response.data.liked.length)
             setIsLiked(true)
           }else{
-            console.log('não foi possivel curtir a publicação')
+           return toast.error('necessário estar logado para LIKE')
           }
         } 
       }catch(err){
