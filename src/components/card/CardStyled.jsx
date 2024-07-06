@@ -8,6 +8,11 @@ export const CardContainer = styled.section`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 0.3rem;
     background-color: #fff;
+    padding: 1rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
 `;
 
 export const CardHeader = styled.article`
