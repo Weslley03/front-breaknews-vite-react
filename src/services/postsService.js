@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const baseUrl = 'https://api-break-news.onrender.com'
-//const baseUrl = 'http://localhost:3000'
+//const baseUrl = 'https://api-break-news.onrender.com'
+const baseUrl = 'http://localhost:3000'
 
 export async function getAllNews() {
     const response = await axios.get(`${baseUrl}/news/getall`);
@@ -28,10 +28,25 @@ export function findByUser(){
     return response;
 }
 
-export function createNews(data){
-    const response = axios.post(`${baseUrl}/news/create`, data, {
+export async function createNews(data){
+    
+    if(data.banner.length === 0){
+        const body = {
+            ...data,
+            banner: 'https://i.imgur.com/XbRg9D7.png'
+        }
+        const response = await axios.post(`${baseUrl}/news/create`, body, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        }) 
+        return response;
+    }
+
+    const response = await axios.post(`${baseUrl}/news/create`, data, {
         headers: {
-            Authorization: `Bearer ${Cookies.get('token')}`
+            Authorization: `Bearer ${Cookies.get('token')}`,
+            'Content-Type': 'application/json'
         }
     }) 
     return response;
