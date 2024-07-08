@@ -9,6 +9,12 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
 
   const [ localLikes, setLocalLikes ] = useState(likes?.length || 0)
   const [ isLiked, setIsLiked ] = useState(false)
+  const [ bannerPesc, setBannerPesc ] = useState('')
+  
+  useEffect( () => {
+    const bannerSrc = banner.startsWith('data:') ? banner : `data:image/*;base64,${banner}`
+    setBannerPesc(bannerSrc)
+  }, []) 
 
   useEffect( () => {
     setLocalLikes(likes?.length || 0)
@@ -72,7 +78,7 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
             </section>
           </CardFooter>
         </div>
-        <img src={banner} alt="imagem" />
+        <img src={bannerPesc} alt="imagem" />
       </CardBody>
     </CardContainer>
   );

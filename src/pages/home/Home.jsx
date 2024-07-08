@@ -5,7 +5,7 @@ import { getAllNews, getTopPost } from "../../services/postsService";
 
 export default function Home() {
   const [news, setNews] = useState([]);
-  const [topNews, setTopNews] = useState([]);
+  const [ topNews, setTopNews] = useState({});
   const [ loading, setLoading ] = useState(true)  
 
   async function findtNews() {
@@ -14,26 +14,23 @@ export default function Home() {
       const newsResponse = await getAllNews();
       if(newsResponse.data && newsResponse.data.results){
         setNews(newsResponse.data.results);
-        setLoading(false)
       }
 
       const topNewsResponse = await getTopPost();
       if(topNewsResponse.data && topNewsResponse.data.news){
         setTopNews(topNewsResponse.data.news);
-        setLoading(false)
       }
+      setLoading(false);
     }catch(err){
       console.log(err)
       setNews([])
-      setTopNews([])
+      setTopNews({})
+      setLoading(false)
     }
   }
 
   useEffect(() => {
-    const buscarNoticias = async () => {
-        await findtNews()
-    }    
-    buscarNoticias();
+    findtNews()
   }, []);
 
   if (loading) {
@@ -42,7 +39,7 @@ export default function Home() {
         <p>carregando...</p>
       </div>
     );
-  }
+  } 
 
   return (
     <section>
@@ -52,7 +49,7 @@ export default function Home() {
           top={true}
           title={topNews.title}
           text={topNews.text}
-          banner={topNews.banner}
+          banner={topNews.banner.startsWith('data:') ? topNews.banner : `data:image/*;base64,${topNews.banner}`}
           likes={topNews.likes}
           id={topNews.id}
           comments={topNews.comments}
@@ -62,12 +59,13 @@ export default function Home() {
 
       <HomeBody>
         {Array.isArray(news) && news.map((item) => {
+          const bannerSrc = item.banner.startsWith('data:') ? item.banner : `data:image/*;base64,${item.banner}`
           return (
             <Card
               key={item.id}
               title={item.title}
               text={item.text}
-              banner={item.banner}
+              banner={bannerSrc}
               likes={item.likes}
               id={item.id}
               comments={item.comments}

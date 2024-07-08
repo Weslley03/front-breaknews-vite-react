@@ -7,22 +7,50 @@ import { ErrorSpan } from "../../components/navbar/NavbarStyled.jsx";
 import { createNews, getNewsByIdService, editNews, deleteNews } from "../../services/postsService.js";
 import { Input } from "../../components/InputCompo/Input.jsx";
 import { Button } from "../../components/Button/Button.jsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ManageNews(){
     
     const nami = useNavigate()
     const { action, id } = useParams();
+    const [ imageBase64, setImageBase64 ] = useState('')
     const {
         register: registerNews,
         handleSubmit: handleRegisterNews,
         setValue,
         formState: { errors: errorsRegisterNews }
     } = useForm({resolver: zodResolver(NewsSchema)})
-    
-    async function registerNewsSubmit(data){
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]
+        if(file){
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]
+                setImageBase64(base64String)    
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
+    async function handleFormSubmit (data){
         try{
-            await createNews(data)
+            data.banner = imageBase64   
+            await submitData(data)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    async function submitData(data){
+        try{    
+            if(action === 'add'){
+                await createNews(data)
+            } else if (action === 'edit'){
+                await editNews(data, id)
+            } else if(action === 'delete'){
+                await deleteNews(id)
+            }
             nami('/profile')
         }catch(err){
             console.log(err)
@@ -53,6 +81,7 @@ export default function ManageNews(){
             setValue('title', data.noticia.title)
             setValue('banner', data.noticia.banner)
             setValue('text', data.noticia.text)
+            setImageBase64(data.noticia.banner)
         }catch(err){
             console.log(err)
         }
@@ -62,19 +91,12 @@ export default function ManageNews(){
         if(action === 'edit' || action === 'delete') {
             getNewsById(id)
         }
-    }, [])
+    }, [action, id])
 
     return(
         <AddNewsContainer>
             <h2>{ action == 'add' ? 'adicionar' : action == 'edit' ? 'atualizar' : 'delete'} Notícias</h2>
-            <form onSubmit={
-                action == 'add'
-                 ? handleRegisterNews(registerNewsSubmit)
-                 : action == 'edit' 
-                 ? handleRegisterNews(editNewsSubmit)
-                 : handleRegisterNews(deleteNewsSubmit)
-            }>
-            
+            <form onSubmit={handleRegisterNews(handleFormSubmit)}>
             <Input  
                 type='text'
                 placeholder='titulo'
@@ -85,9 +107,11 @@ export default function ManageNews(){
             {errorsRegisterNews.title && (<ErrorSpan> {errorsRegisterNews.title.message} </ErrorSpan>)}
 
             <Input
-                type='text'
-                placeholder='link da imagem'
+                type='file'
+                placeholder='imagem'
                 name='banner'
+                accept="image/*"
+                onChange={handleImageChange}
                 register={registerNews}
                 disabled={action === 'delete'}
             />
