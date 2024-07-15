@@ -52,8 +52,8 @@ export async function createNews(data){
     return response;
 }
 
-export function getNewsByIdService(id){
-    const response = axios.get(`${baseUrl}/news/findId/${id}`, {
+export async function getNewsByIdService(id){
+    const response = await axios.get(`${baseUrl}/news/findId/${id}`, {
         headers: {
             Authorization: `Bearer ${Cookies.get('token')}`
         }
