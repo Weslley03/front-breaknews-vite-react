@@ -14,6 +14,7 @@ import PageWithfooter from './components/footer/PageWithfooter.jsx'
 import ManageProfile from './pages/manageProfile/ManageProfile.jsx'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import ReadNews from './pages/readnews/ReadNews.jsx'
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,11 @@ const router = createBrowserRouter([
   { 
     path: 'manage-profile/:id',
     element: <ManageProfile />
+  },
+
+  { 
+    path: 'read-news/:id',
+    element: <ReadNews />
   }
 ])
 
