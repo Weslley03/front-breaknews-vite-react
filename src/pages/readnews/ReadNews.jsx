@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentSchema } from "../../Schemas/CommentSchema";
 import { ErrorSpan } from "../../components/navbar/NavbarStyled";
 import { CommentArea } from "../../components/commentArea/CommentArea.jsx";
+import { findUserByIdService } from "../../services/userServices.js";
 
 
 function ReadNews() {
@@ -18,7 +19,7 @@ function ReadNews() {
   const [ comments, setComments ] = useState([])
   const [news, setNews] = useState({});
   const [commentValue, setCommentValue] = useState('');
-
+  const [ avatars, setAvatars ] = useState({})
 
   const {
     register: registerComment,
@@ -50,13 +51,31 @@ function ReadNews() {
     }
   }
 
+  async function puxarAvatar(idUser){
+    try{
+        const userResponse = await findUserByIdService(idUser) 
+        return userResponse.data.avatar
+    } catch (err) {
+        console.error('erro ao buscar avatar: ', err)
+        return ''
+      }
+    }
+
   async function findComments() {
     try{
         const commentsNews = await findCommentsNews(id)
         if(!commentsNews){
             return console.log('não deu bom executar a função findCommentsNews')
         }
-        setComments(commentsNews.data.news.comments)
+        const commentsData = commentsNews.data.news.comments
+        setComments(commentsData)
+
+        const avatarsData = {}
+        for (const comment of commentsData) {
+            const avatar = await puxarAvatar(comment.userId);
+            avatarsData[comment.userId] = avatar;
+        }
+        setAvatars(avatarsData)
     }catch(err){
         console.error('houve um erro no front, ' + err)
     }
@@ -100,7 +119,7 @@ function ReadNews() {
                 </CaixaComentario>
                 <CaixaTexto>
                     <form onSubmit={handleRegisterComment(handleFormSubmit)}>
-                        <CommentArea  
+                        <CommentArea
                             type='text'
                             placeholder='escreva seu comentario'
                             name='comment'
@@ -123,10 +142,12 @@ function ReadNews() {
             <Header>
                     {
                         comments.map((item) => {
+                            const imgUserComment = avatars[item.userId]
                             return (
                                 <div key={item.createdAt}>
                                     <CaixaComentario>
-                                        <p key={item.createdAt}> user id: {item.userId} -- {item.comment} </p>
+                                            { imgUserComment && <ProfileAvatarRead src={imgUserComment} alt="avatar do comentarista"/>}  
+                                            <p> --- {item.comment} </p>
                                     </CaixaComentario>
                                 </div>
                             )

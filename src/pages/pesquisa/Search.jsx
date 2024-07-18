@@ -44,6 +44,7 @@ export default function Search() {
                         banner={item.banner}
                         likes={item.likes}
                         comments={item.comments}
+                        textLimit={150}
                     />
                 ))}
             </SearchNews>
