@@ -108,3 +108,16 @@ export async function likecheck(idNew){
         res.status(500).send(err.message);
     }
 }
+
+export async function commentNews(idNew, data){
+    try{
+        const response = await axios.patch(`${baseUrl}/news/comment/${idNew}`, data, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        })
+        return response;
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+}
