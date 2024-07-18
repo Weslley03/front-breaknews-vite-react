@@ -53,6 +53,7 @@ export default function Home() {
           likes={topNews.likes}
           id={topNews.id}
           comments={topNews.comments}
+          actions={false}
           />
         )}
       </HomeHeader>
@@ -69,6 +70,7 @@ export default function Home() {
               likes={item.likes}
               id={item.id}
               comments={item.comments}
+              textLimit={150}
             />
           );
         })}

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card } from "../../components/card/Card";
-import { commentNews, getNewsByIdService } from "../../services/postsService";
+import { commentNews, findCommentsNews, getNewsByIdService } from "../../services/postsService";
 import { Header, SectionComments, Container, ProfileAvatarRead, CaixaComentario, CaixaTexto} from "./ReadNewsStyled";
 import { UserContext } from "../../context/UserContext";
 import { Button } from "../../components/Button/Button";
@@ -10,14 +10,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentSchema } from "../../Schemas/CommentSchema";
 import { ErrorSpan } from "../../components/navbar/NavbarStyled";
 import { CommentArea } from "../../components/commentArea/CommentArea.jsx";
-import { any } from "zod";
 
 
 function ReadNews() {
   const { id } = useParams();
+  const { user } = useContext(UserContext);
+  const [ comments, setComments ] = useState([])
   const [news, setNews] = useState({});
   const [commentValue, setCommentValue] = useState('');
-  const { user } = useContext(UserContext);
+
 
   const {
     register: registerComment,
@@ -31,8 +32,8 @@ function ReadNews() {
  async function handleFormSubmit(data) {
     try{
         await commentNews(id, data)
-        reset()
         setCommentValue('')
+        findComments()
     }catch(err){
         console.error(err)
     }
@@ -49,9 +50,23 @@ function ReadNews() {
     }
   }
 
+  async function findComments() {
+    try{
+        const commentsNews = await findCommentsNews(id)
+        if(!commentsNews){
+            return console.log('não deu bom executar a função findCommentsNews')
+        }
+        setComments(commentsNews.data.news.comments)
+    }catch(err){
+        console.error('houve um erro no front, ' + err)
+    }
+  }
+
   useEffect(() => {
     findNews()
+    findComments()
   }, [])
+
 
   return (
     <>
@@ -103,6 +118,22 @@ function ReadNews() {
             </div>
             </Container>
         </SectionComments>  
+
+        <section>
+            <Header>
+                    {
+                        comments.map((item) => {
+                            return (
+                                <div key={item.createdAt}>
+                                    <CaixaComentario>
+                                        <p key={item.createdAt}> user id: {item.userId} -- {item.comment} </p>
+                                    </CaixaComentario>
+                                </div>
+                            )
+                        })
+                    }   
+            </Header>
+        </section>
     </>
   );
 }

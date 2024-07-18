@@ -5,7 +5,7 @@ import { likedNews, likecheck } from '../../services/postsService.js'
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export function Card({top, title, text, likes, comments, banner, actions= false, id }) {
+export function Card({top, title, text, likes, comments, banner, actions= false, id, textLimit }) {
 
   const [ localLikes, setLocalLikes ] = useState(likes?.length || 0)
   const [ isLiked, setIsLiked ] = useState(false)
@@ -65,7 +65,7 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
             <Link to={`/read-news/${id}`}> 
              <h2>{title}</h2>
             </Link>
-            <TextLimit text={text} limit={actions ? 150 : 30000} />
+            <TextLimit text={text} limit={textLimit || (actions ? 150 : 3000)} />
           </CardHeader>
 
           <CardFooter>

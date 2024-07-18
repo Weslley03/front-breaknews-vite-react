@@ -121,3 +121,16 @@ export async function commentNews(idNew, data){
         res.status(500).send(err.message);
     }
 }
+
+export async function findCommentsNews(idNew){
+    try{
+        const response = await axios.get(`${baseUrl}/news/comment/commentbyidnews/${idNew}`, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        })
+        return response;
+    }catch(err){
+        console.error(err.message);
+    }
+}
