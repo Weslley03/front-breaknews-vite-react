@@ -14,7 +14,7 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
   useEffect( () => {
     const bannerSrc = banner.startsWith('data:') ? banner : `data:image/*;base64,${banner}`
     setBannerPesc(bannerSrc)
-  }, []) 
+  }, [banner]) 
 
   useEffect( () => {
     setLocalLikes(likes?.length || 0)
@@ -62,8 +62,10 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
             </Link>
             </span>
             }
-            <h2>{title}</h2>
-            <TextLimit text={text} limit={150} />
+            <Link to={`/read-news/${id}`}> 
+             <h2>{title}</h2>
+            </Link>
+            <TextLimit text={text} limit={actions ? 150 : 30000} />
           </CardHeader>
 
           <CardFooter>
@@ -78,7 +80,7 @@ export function Card({top, title, text, likes, comments, banner, actions= false,
             </section>
           </CardFooter>
         </div>
-        <img src={bannerPesc} alt="imagem" />
+        {bannerPesc && <img src={bannerPesc} alt="imagem" />}
       </CardBody>
     </CardContainer>
   );
