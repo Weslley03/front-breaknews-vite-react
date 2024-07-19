@@ -43,3 +43,7 @@ export const CaixaComentario = styled.div`
 export const CaixaTexto = styled.div`
 
 `
+
+export const UserLoggedDiv = styled.div`
+    display: block;
+`

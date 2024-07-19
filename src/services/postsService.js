@@ -61,6 +61,11 @@ export async function getNewsByIdService(id){
     return response;
 }
 
+export async function NewsByIdSimpleService(id){
+    const response = await axios.get(`${baseUrl}/news/findnewsidsimple/${id}`);
+    return response;
+}
+
 export function editNews(data, id){
     const response = axios.patch(`${baseUrl}/news/upadate/${id}`, data, {
         headers: {
@@ -124,11 +129,7 @@ export async function commentNews(idNew, data){
 
 export async function findCommentsNews(idNew){
     try{
-        const response = await axios.get(`${baseUrl}/news/comment/commentbyidnews/${idNew}`, {
-            headers: {
-                Authorization: `Bearer ${Cookies.get('token')}`
-            }
-        })
+        const response = await axios.get(`${baseUrl}/news/comment/commentbyidnews/${idNew}`)
         return response;
     }catch(err){
         console.error(err.message);
