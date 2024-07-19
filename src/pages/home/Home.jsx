@@ -54,6 +54,7 @@ export default function Home() {
           id={topNews.id}
           comments={topNews.comments}
           actions={false}
+          textLimit={200}
           />
         )}
       </HomeHeader>
