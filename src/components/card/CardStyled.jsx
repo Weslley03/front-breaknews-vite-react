@@ -25,6 +25,9 @@ export const CardHeader = styled.article`
         margin-bottom: 1rem;
         font-size: ${(props) => (props.$top ? "2.5rem" : "1.1rem")};
         width: 100%;
+
+        color: #191919;
+        cursor: pointer;
     }   
 
     i{
@@ -42,6 +45,10 @@ export const CardHeader = styled.article`
         flex-direction: row;
         text-decoration: none   ;
     }
+
+    a {
+    text-decoration: none;
+  }
 `
 
 export const CardBody = styled.article`

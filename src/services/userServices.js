@@ -42,11 +42,7 @@ export function userLogged(){
 }
 
 export function findUserByIdService(id){
-    const response = axios.get(`${baseUrl}/users/findById/${id}`, {
-        headers: {
-            Authorization: `Bearer ${Cookies.get('token')}`
-        }
-    })
+    const response = axios.get(`${baseUrl}/users/findbyidsimple/${id}`)
     return response;
 }
 

@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const baseUrl = 'https://api-break-news.onrender.com'
-//const baseUrl = 'http://localhost:3000'
+//const baseUrl = 'https://api-break-news.onrender.com'
+const baseUrl = 'http://localhost:3000'
 
 export async function getAllNews() {
     const response = await axios.get(`${baseUrl}/news/getall`);
@@ -61,6 +61,11 @@ export async function getNewsByIdService(id){
     return response;
 }
 
+export async function NewsByIdSimpleService(id){
+    const response = await axios.get(`${baseUrl}/news/findnewsidsimple/${id}`);
+    return response;
+}
+
 export function editNews(data, id){
     const response = axios.patch(`${baseUrl}/news/upadate/${id}`, data, {
         headers: {
@@ -106,5 +111,27 @@ export async function likecheck(idNew){
         return response;
     }catch(err){
         res.status(500).send(err.message);
+    }
+}
+
+export async function commentNews(idNew, data){
+    try{
+        const response = await axios.patch(`${baseUrl}/news/comment/${idNew}`, data, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('token')}`
+            }
+        })
+        return response;
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+}
+
+export async function findCommentsNews(idNew){
+    try{
+        const response = await axios.get(`${baseUrl}/news/comment/commentbyidnews/${idNew}`)
+        return response;
+    }catch(err){
+        console.error(err.message);
     }
 }
