@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react";
 import { Card } from "../../components/card/Card";
-import { HomeBody, HomeHeader } from "./HomeStyled";
+import { HomeBody, HomeHeader, PaginButton } from "./HomeStyled";
 import { getAllNews, getTopPost } from "../../services/postsService";
 
 export default function Home() {
   const [news, setNews] = useState([]);
   const [ topNews, setTopNews] = useState({});
   const [ loading, setLoading ] = useState(true)  
+  const [ limit, setLimit ] = useState(6)
+  const [ offset, setOffset ] = useState(0)
+  const [ total, setTotal ] = useState(0)
+  const [ nextUrl, setNextUrl ] = useState('')
+  const [ previousUrl, setPreviousUrl ] = useState('')
 
-  async function findtNews() {
-
+  async function findtNews(offset = 1, limit = 6) {
+    setLoading(true)
     try{
-      const newsResponse = await getAllNews();
+      const newsResponse = await getAllNews(offset, limit)
       if(newsResponse.data && newsResponse.data.results){
-        setNews(newsResponse.data.results);
+        setNews(newsResponse.data.results)
+        setNextUrl(newsResponse.data.nextUrl)
+        setPreviousUrl(newsResponse.data.previousUrl)
+        setTotal(newsResponse.data.total) 
       }
 
       const topNewsResponse = await getTopPost();
@@ -30,8 +38,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    findtNews()
-  }, []);
+    findtNews(offset, limit)
+  }, [offset, limit])
 
   if (loading) {
     return (
@@ -40,6 +48,22 @@ export default function Home() {
       </div>
     );
   } 
+
+  const handleNext = () => {
+    if (nextUrl) {
+      const params = new URLSearchParams(nextUrl.split('?')[1])
+      setOffset(Number(params.get('offset')))
+      setLimit(Number(params.get('limit')))
+    }
+  }
+
+  const handlePrevious = () => {
+    if (previousUrl) {
+      const params = new URLSearchParams(previousUrl.split('?')[1]);
+      setOffset(Number(params.get('offset')))
+      setLimit(Number(params.get('limit')))
+    }
+  }
 
   return (
     <section>
@@ -76,6 +100,12 @@ export default function Home() {
           );
         })}
       </HomeBody>
+
+      <PaginButton>
+        <button onClick={handlePrevious} disabled={!previousUrl}>anterior</button>
+        <button onClick={handleNext} disabled={!nextUrl}>próximo</button>
+      </PaginButton>
+
     </section>
   );
 }

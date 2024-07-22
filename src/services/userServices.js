@@ -1,5 +1,6 @@
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
+import { avatarUndefined, backgroundUndefined } from "../Datas";
 
 const baseUrl = 'https://api-break-news.onrender.com'
 //const baseUrl = 'http://localhost:3000'
@@ -24,8 +25,8 @@ export function signup(data){
     const body = {
         ...data, 
         userName: generateUsername(data.name), 
-        avatar: 'https://i.imgur.com/xmI2QAo.jpeg',
-        background: 'https://i.imgur.com/XbRg9D7.png'
+        avatar: avatarUndefined,
+        background: backgroundUndefined
     }
     
     const response = axios.post(`${baseUrl}/users/create`, body)

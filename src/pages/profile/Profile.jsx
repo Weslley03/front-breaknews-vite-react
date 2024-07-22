@@ -16,8 +16,10 @@ import { Card } from '../../components/card/Card.jsx'
 import { Link } from "react-router-dom";
 
 export function Profile() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext)
   const [ news, setNews ] = useState([])
+  const [ backgroundPESC, setBackgroundPESC ] = useState('')
+  const [ avatarPESC, setAvatarPESC ] = useState('')
 
   async function findUserNews(){
     const responseNews = await findByUser()
@@ -27,6 +29,28 @@ export function Profile() {
   useEffect(() => {
     findUserNews()
   }, [])
+
+  useEffect(() => {
+    const determineImageType = (imageUrl) => {
+        if (imageUrl.includes('data:image/png')) {
+            return 'image/png'
+        } else if (imageUrl.includes('data:image/jpeg')) {
+            return 'image/jpeg'
+        } else {
+            return 'image/*'
+        }
+    }
+
+    const backgroundSrc = user.background.startsWith('data:') 
+        ? user.background 
+        : `data:${determineImageType(user.background)};base64,${user.background}`
+    setBackgroundPESC(backgroundSrc)
+
+    const avatarSrc = user.avatar.startsWith('data:') 
+        ? user.avatar 
+        : `data:${determineImageType(user.avatar)};base64,${user.avatar}`
+    setAvatarPESC(avatarSrc)
+}, [user.avatar, user.background])
 
   return (
     <ProfileContainer>
@@ -38,10 +62,10 @@ export function Profile() {
                 </Link>
               </ProfileIconEdit>
         
-        <ProfileBackground src={user.background} alt="background do user" />
+        <ProfileBackground src={backgroundPESC} alt="background do user" />
 
         <ProfileUser>
-          <ProfileAvatar src={user.avatar} alt="avatar do user" />
+          <ProfileAvatar src={avatarPESC} alt="avatar do user" />
           <h2> {user.name} </h2>
           <h3>@{user.userName} </h3>
           </ProfileUser>
@@ -76,5 +100,5 @@ export function Profile() {
           </ProfileNews> 
 
     </ProfileContainer>
-  );
+  )
 }
