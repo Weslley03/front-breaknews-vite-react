@@ -14,7 +14,13 @@ import { useNavigate } from "react-router-dom";
 export default function ManageProfile() {
 
     const nami = useNavigate()
-    const [ loading, setLoading ] = useState(true)  
+    const [ loading, setLoading ] = useState(true) 
+    const [backgroundBase64, setBackgroundBase64] = useState('')
+    const [avatarBase64, setAvatarBase64] = useState('')
+    const [backgroundPESC, setBackgroundPESC] = useState('')
+    const [avatarPESC, setAvatarPESC] = useState('')
+    const [converteuBackground, setConverteuBackground] = useState(false)
+    const [converteuAvatar, setConverteuAvatar] = useState(false)
     const { user } = useContext(UserContext);
     const id = user._id
     const {
@@ -23,10 +29,43 @@ export default function ManageProfile() {
         formState: {errors: errorsRegisterProfile},
     } = useForm({resolver: zodResolver(ProfileSchema)})
 
+    const handleImageChange = (e, type) => {
+        const file = e.target.files[0]
+    
+        if (file && file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]
+                if (type === 'background') {
+                    setBackgroundBase64(base64String)
+                    setConverteuBackground(true)
+                } else if (type === 'avatar') {
+                    setAvatarBase64(base64String)
+                    setConverteuAvatar(true)
+                }
+            }
+            reader.readAsDataURL(file)
+        } else {
+            alert('por favor, selecione uma imagem válida com tamanho máximo de 5MB')
+        }
+    }
+
     async function EditProfileSubmit(data){
         try{
-        setLoading(true)    
-        await editProfile(id, data)
+            if (!backgroundBase64 && !avatarBase64) {
+                return alert('é necessário anexar uma imagem')
+            }
+            setLoading(true)    
+
+            if(converteuBackground){
+                data.background = backgroundBase64
+            }
+
+            if(converteuAvatar) {
+                data.avatar = avatarBase64
+            }
+            
+            await editProfile(id, data)
         }catch(err){
             console.log(err)
         }finally{
@@ -49,15 +88,37 @@ export default function ManageProfile() {
         getUserByid()
     }, [])
 
+    useEffect(() => {
+        const determineImageType = (imageUrl) => {
+            if (imageUrl.includes('data:image/png')) {
+                return 'image/png'
+            } else if (imageUrl.includes('data:image/jpeg')) {
+                return 'image/jpeg'
+            } else {
+                return 'image/*'
+            }
+        }
+    
+        const backgroundSrc = user.background.startsWith('data:') 
+            ? user.background 
+            : `data:${determineImageType(user.background)};base64,${user.background}`
+        setBackgroundPESC(backgroundSrc)
+    
+        const avatarSrc = user.avatar.startsWith('data:') 
+            ? user.avatar 
+            : `data:${determineImageType(user.avatar)};base64,${user.avatar}`
+        setAvatarPESC(avatarSrc)
+    }, [user.avatar, user.background])
+
     return(
 
         <EditProfileContainer>
 
         <ProfileHeader>
-            <ProfileBackground src={user.background} alt="background do user" />
+            <ProfileBackground src={backgroundPESC} alt="background do user" />
 
             <ProfileUser>
-                <ProfileAvatar src={user.avatar} alt="avatar do user" />
+                <ProfileAvatar src={avatarPESC} alt="avatar do user" />
                 <h2> {user.name} </h2>
                 <h3>@{user.userName} </h3>
             </ProfileUser>
@@ -65,17 +126,23 @@ export default function ManageProfile() {
 
             <h1>edite aqui o seu perfil</h1>
             <form onSubmit={handleRegisterProfile(EditProfileSubmit)}>
+                <label> background </label>
                 <Input
-                    type='text'
-                    placeholder='link do banner'
-                    name='background'
+                    type='file'
+                    placeholder='banner'
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, 'background')}
+                    name='background'   
                     register={registerProfile}
                 />
                 {errorsRegisterProfile.background && <ErrorSpan> errorsRegisterProfile.background.message </ErrorSpan>}
 
+                <label> avatar </label>
                 <Input
-                    type='text'
-                    placeholder='link do avatar'
+                    type='file'
+                    placeholder='avatar'
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, 'avatar')}
                     name='avatar'
                     register={registerProfile}
                 />
