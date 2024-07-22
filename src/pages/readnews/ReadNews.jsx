@@ -201,13 +201,26 @@ function ReadNews() {
       <section>
         <Header>
           {comments.map((item) => {
-            const imgUserComment = avatars[item.userId];
+            const imgUserComment = avatars[item.userId]
+           
+            const determineImageType = (imageUrl) => {
+              if (imageUrl.includes('data:image/png')) {
+                  return 'image/png'
+              } else if (imageUrl.includes('data:image/jpeg')) {
+                  return 'image/jpeg'
+              } else {
+                  return 'image/*'
+              }
+          }
+            const avatarSrc = imgUserComment.startsWith('data:') 
+            ? imgUserComment
+            : `data:${determineImageType(imgUserComment)};base64,${imgUserComment}`
             return (
               <div key={item.createdAt}>
                 <CaixaComentario>
                   {imgUserComment && (
                     <ProfileAvatarRead
-                      src={imgUserComment}
+                      src={avatarSrc}
                       alt="avatar do comentarista"
                     />
                   )}
