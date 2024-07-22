@@ -13,3 +13,13 @@ export const HomeHeader = styled.section`
     display: flex;
     margin: 1rem auto;
 `
+
+export const PaginButton = styled.div`
+    display: 'flex';
+    text-align: center;
+    
+    button{
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+`
