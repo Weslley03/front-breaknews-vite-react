@@ -46,11 +46,25 @@ function ReadNews() {
 
   async function verifyUserLogged() {
     if (!user) {
-      return setLogged(false);
+      return setLogged(false)
     } else {
-      setAvatarLogged(user.avatar);
-      setUserNameLogged(user.userName);
-      setLogged(true);
+      const determineImageType = (imageUrl) => {
+        if (imageUrl.includes('data:image/png')) {
+            return 'image/png'
+        } else if (imageUrl.includes('data:image/jpeg')) {
+            return 'image/jpeg'
+        } else {
+            return 'image/*'
+        }
+    }
+
+      const avatarSrc = user.avatar.startsWith('data:') 
+      ? user.avatar 
+      : `data:${determineImageType(user.avatar)};base64,${user.avatar}`
+      
+      setAvatarLogged(avatarSrc)
+      setUserNameLogged(user.userName)
+      setLogged(true)
       return;
     }
   }
