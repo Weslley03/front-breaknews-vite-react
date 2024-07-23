@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { InputSpace, TextArea  } from './InputStyled.jsx'
 
-export function Input({type, placeholder, name, register, isInput = true, value: initialValue, disabled, onChange }) {
+export function Input({type, placeholder, name, register, isInput = true, value: initialValue, disabled, onChange, autoComplete }) {
 
     const [ value, setValue ] = useState(initialValue || '');
 
@@ -17,7 +17,7 @@ export function Input({type, placeholder, name, register, isInput = true, value:
     }
 
     let inputProps = {
-        type, placeholder, ...register(name), onChange: handleChange, disabled, value    
+        type, placeholder, ...register(name), onChange: handleChange, disabled, value, autoComplete ,
     }
 
     if(value) inputProps.value = value;

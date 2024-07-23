@@ -57,10 +57,10 @@ export function Authentication() {
         <h2>entrar</h2>
         <form onSubmit={signinHandleSubmit(inHandleSubmit)}>
 
-          <Input type="email" placeholder="E-mail" name="email" register={signinRegister}/>
+          <Input type="email" placeholder="E-mail" name="email" register={signinRegister} autoComplete="email"/>
           {signinErrors.email && <ErrorSpan> {signinErrors.email.message} </ErrorSpan>}
 
-          <Input type="password" placeholder="Password" name="password" register={signinRegister}/>
+          <Input type="password" placeholder="Password" autoComplete="current-password" name="password" register={signinRegister}/>
           {signinErrors.password && <ErrorSpan> {signinErrors.password.message} </ErrorSpan>}
 
           {errorLogin && <ErrorSpan>{errorLogin}</ErrorSpan>}
@@ -72,16 +72,16 @@ export function Authentication() {
       <Section type="signup">
         <h2>cadastrar</h2>
         <form onSubmit={signupHandleSubmit(upHandleSubmit)}>
-          <Input type="name" placeholder="Nome" name="name" register={signupRegister}/>
+          <Input type="name" placeholder="Nome" name="name" register={signupRegister} autoComplete="name"/>
           {signupErros.nome && <ErrorSpan> {signupErros.nome.message} </ErrorSpan>}
 
-          <Input type="email" placeholder="E-mail" name="email" register={signupRegister}/>
+          <Input type="email" placeholder="E-mail" name="email" register={signupRegister} autoComplete="email"/>
           {signupErros.email && <ErrorSpan> {signupErros.email.message} </ErrorSpan>}
           
-          <Input type="password" placeholder="Password" name="password" register={signupRegister}/>
+          <Input type="password" placeholder="Password" name="password" register={signupRegister} autoComplete="new-password"/>
           {signupErros.password && <ErrorSpan> {signupErros.password.message} </ErrorSpan>}
           
-          <Input type="password" placeholder="Password Confirm" name="confirmpassword" register={signupRegister}/>
+          <Input type="password" placeholder="Password Confirm" name="confirmpassword" register={signupRegister} autoComplete="new-password"/>
           {signupErros.confirmpassword && <ErrorSpan> {signupErros.confirmpassword.message} </ErrorSpan>}
           
           {errorSignUp && <ErrorSpan>{errorSignUp}</ErrorSpan>}
