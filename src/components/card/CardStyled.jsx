@@ -66,6 +66,7 @@ export const CardBody = styled.article`
 
     img {
         width: 40%;
+        max-height: 210px;
         object-fit: cover;
         object-position: center;
         border-radius: 0 .3rem .3rem 0;
@@ -76,6 +77,7 @@ export const CardBody = styled.article`
 
         img {
             width: 100%;
+            max-height: 10000px;
             border-radius: 0 0 .3rem .3rem;
             
         }
