@@ -63,7 +63,11 @@ const router = createBrowserRouter([
 
   { 
     path: 'read-news/:id',
-    element: <ReadNews />
+    element:  (
+      <PageWithfooter>
+        <ReadNews />
+      </PageWithfooter>
+  )
   }
 ])
 
