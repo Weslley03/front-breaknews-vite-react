@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { avatarUndefined, backgroundUndefined } from "../Datas";
 
 //const baseUrl = 'https://api-break-news.onrender.com'
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://tsfastify-api.onrender.com'
 
 export async function signin(data){
     try{
